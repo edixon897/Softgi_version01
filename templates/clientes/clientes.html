@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualización de clientes</title>
+    <!-- Incluir enlaces a estilos CSS -->
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/clientes/muestra_clientes.css">
+    <style>
+        /* CSS para ocultar el modal */
+        #editarClienteModal {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <main id="cuerpo">
+        <section id="section_1">
+            <p>Clientes</p>
+        </section>
+        <section id="section_2">
+            <div id="conten_botones">
+                <div id="conten_regresar">
+                    <a href="{{url_for ('inicio') }}" id="isla_1">
+                        <i id="boton_back" class="lni lni-home"></i>
+                    </a>
+                </div>
+                <div id="conten_btn_navegacion">
+                    <div id="isla_2">
+                        <a class="botones" href="{{url_for('crearClientes')}}">Nuevo cliente</a>
+                    </div>
+                </div>
+            </div>
+            <div id="conten_tabla">
+                <div id="isla_3">
+                    <section id="section_buscador_titulo">
+                        <div id="conten_titulo">
+                            <p>Mis clientes</p>
+                        </div>
+                        <form id="form_conten">
+                            <i id="icono_busqueda" class="lni lni-search-alt"></i>
+                            <input type="search" id="searchClientes" name="searchClientes" placeholder="Buscar...">
+                        </form>
+                    </section>
+                    <section id="section_tabla_info">
+                        <div id="conten_t">
+                            <table id="TablaClientes">
+                                <thead>
+                                    <tr>
+                                        <th>C.C./NIT cliente</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Fecha de nacimiento</th>
+                                        <th>Número contacto</th>
+                                        <th>Correo electrónico</th>
+                                        <th>Direccción</th>
+                                        <th>Ciudad</th>
+                                        <th>Tipo persona</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Loop para mostrar clientes -->
+                                    {% for c in resulta %}
+                                    <tr>
+                                        <!-- Mostrar información del cliente -->
+                                        {% for i in range(0, 9) %}
+                                            <td>{{ c[i] }}</td>
+                                        {% endfor %}
+                                        <!-- Botón para abrir el modal de edición -->
+                                        <td>
+                                            <button onclick="abrirModalEditar('{{c[0]}}')" class="btn_editar">
+                                                <i id="icono_2" class="lni lni-pencil"></i>
+                                            </button>
+                                        </td>
+                                        <!-- Botón para eliminar cliente -->
+                                        <td class="btns_centro btn_eliminar">
+                                            <button onclick="eliminarCliente('{{c[0]}}')">
+                                                <i id="icono_2" class="lni lni-trash-can"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <!-- Mensaje de "No hay resultados" -->
+                                <p id="noResults" style="display: none;">No se encontraron resultados</p>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+        <input type="hidden" value="{{session['rol']}}" id="input_rol" oninput="verifica_input_rol()">
+    </main>
+    {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+    {% endwith %}
+
+    <div id="modalContainer"></div>
+
+    <!-- Incluir scripts al final del cuerpo del documento -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../../static/javaScript/modalEditarCliente.js"></script>
+    <script src="../../static/javaScript/buscarClientes.js"></script>
+
+</body>
+
+</html>
+

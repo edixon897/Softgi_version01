@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles compras proveedores</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../static/css/compra_proveedores/detalles_compras/detalles_compra_proveedores.css">
+</head>
+<body>
+
+    <main id="cuerpo">
+        <section id="section-1">
+            <p>Detalles de la compra</p>
+        </section>
+        <section id="section_2">
+            <div id="conten_tabla">
+                <div id="isla_3">
+
+                    <table id="tabla_productos">
+                        <thead>
+                            <tr>
+                                <th>Numero Compra</th>
+                                <th>Fecha de la Compra</th>
+                                <th>Nombre del Producto</th>
+                                <th>Cantidad</th>
+                                <th>Valor Unidad</th>
+                                <th>Valor Cantidad Total</th>
+                                
+                            </tr>
+                        </thead>
+                    
+                        <tbody>
+                            
+                            {% for c in resul %}
+                            <tr>
+                                {% for i in result1 %}
+                                    <td>{{i[0]}}</td>
+                                    <td>{{i[1]}}</td>
+                                    <td>{{c[1]}}</td>
+                                    <td>{{c[2]}}</td>
+                                    <td>${{ '{:,.0f}'.format(c[3]) }}</td>
+                                    <td>${{ '{:,.0f}'.format(c[4]) }}</td>
+                                {% endfor %}
+                            </tr>
+                                
+                            {% endfor %}
+                            
+
+                        </tbody>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Valor Total:</strong></td> <!-- Aquí es donde queremos agregar el total -->
+                            <td class="total-columna">${{ '{:,.0f}'.format(total) }}</td> <!-- Añadimos una clase para dar estilo -->
+                        </tr>
+                    </table>
+                   
+                    
+                    <div id="regresar">
+                        <a href="{{url_for ('muestra_compra_proved') }}" id="enlace_volver">
+                                <i id="atras" class="lni lni-arrow-left"></i>
+                            </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="../../static/javaScript/buscarCompras_prove.js"></script>
+</body>
+</html>

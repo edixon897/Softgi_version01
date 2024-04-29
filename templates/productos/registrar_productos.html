@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro productos</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/productos/registro_producto.css">
+    
+</head>
+<body>
+    
+    <main id="inicio">
+
+        <section id="conten_titulo_1">
+
+            <div id="conten_titulo_lado_1">
+                <h2>Registro de productos</h2>
+            </div>
+            <div id="conten_titulo_lado_2">
+                <div id="barra_progreso_1">
+
+                </div>
+                <div id="barra_progreso_2">
+
+                </div>
+                <div id="barra_progreso_3">
+                    
+                </div>
+            </div>
+
+        </section>
+
+        <form action="/crear_Producto" method="post" id="conten_formulario_2">
+
+            <div class="conten_FORM">
+                
+                <section class="lado_info_personal">
+
+                    <div id="conten_titulo_div">
+                        <p>Referencias</p>
+                    </div>
+
+                    <div class="conten_inputs_1">
+                        
+
+
+                        <div class="campo_2">
+                            
+                            <input type="text" name="ref_produ_1" id="ref_produ_1" class="input_campo" maxlength="50" required> 
+                            <label id="ref_produ_1" for="nombre">Referencia</label>
+                        </div>
+
+                    </div>
+                    
+                </section>
+
+                <section class="lado_info_contacto">
+
+                    <div class="conten_titulo_div_2">
+                        <p>Clasificación</p>
+                    </div>
+
+                    <div class="content_inputs_2">
+
+                        
+                        <div class="campo_2">
+                            <select id="proveedor" name="proveedor" class="input_campo" required>
+                                <option value="" disabled selected>Seleccione el proveedor</option>
+                                {% for proveedor in proveedores %}
+                                <option value="{{ proveedor[0] }}">{{ proveedor[1] }}</option>
+                                {% endfor %}
+                            </select>
+                            <label  for="proveedor">Proveedor</label>
+                        </div>
+
+                        <!-- Botón para abrir el modal para registrar proveedor -->
+                        
+                        <div class="boton_modal1">
+                            <a href="#modal_inicio" rel="leanModal" id="crear-proveedor-1">Nuevo Proveedor</a>
+                        </div>
+                            
+                        <div class="campo_2">
+                            <select id="categorias" name="categorias" class="input_campo" required>
+                                <option value="" disabled selected>Seleccione la categoria</option>
+                                {% for categoria in categorias %}
+                                    <option value="{{ categoria[0] }}">{{ categoria[1] }}</option>
+                                {% endfor %}
+                            </select>
+                            <label  for="categorias">Categoría</label>
+                        </div>
+                        <!-- Botón para abrir el modal para registrar categoria -->
+                        
+                        <div class="boton_modal1">
+                            <a href="#contenedorM_categoria" id="crear-categoria-1" rel="leanModal">Nueva categoría</a>
+                        </div>
+                        
+                    </div>
+
+                </section>
+
+                <!-- sesion 2 del formulario -->
+                <section id="sesion_formulari_2">
+
+                    <section class="lado_info_personal">
+
+                        <div id="conten_titulo_div">
+                            <p>Detalles del producto</p>
+                        </div>
+    
+                        <div class="conten_inputs_1">
+                            
+    
+    
+                            <div class="campo_2">
+                                <input type="text" name="nombre_producto" id="nombre_producto" class="input_campo" maxlength="50"  required>
+                                <label for="nombre_producto">Nombre del producto</label>
+                            </div>
+    
+                            <div class="campo_2">
+                                <input type="number" name="precio_compra" id="precio_compra"  class="input_campo" maxlength="10" required>
+                                <label  for="precio_compra">Precio de compra</label>
+                            </div>
+    
+                            <div class="campo_2">
+                                <input type="number" name="precio_venta" id="precio_venta"  class="input_campo" maxlength="10" required>
+                                <label  for="precio_venta">Precio de venta</label>
+                            </div>
+    
+                            <div class="campo_2">
+                                <input type="text" name="descripcion" id="descripcion"  class="input_campo" maxlength="100" required>
+                                <label  for="descripcion">Descripción</label>
+                            </div>
+    
+                        </div>
+                        
+                    </section>
+
+                    <section class="lado_info_contacto">
+
+                        <div class="conten_titulo_div_2">
+                            <p>Existencia</p>
+                        </div>
+    
+                        <div class="content_inputs_2">
+    
+                            <div class="campo_2">
+                                <input type="number" name="cantidad_producto" id="cantidad_producto"  class="input_campo" maxlength="3" required>
+                                <label cantidad_producto for="cantidad_producto">Cantidad de producto</label>
+                            </div>
+    
+                            <div class="campo_2">
+                                <input type="number" name="stockminimo" id="stockminimo"  class="input_campo" maxlength="2" required>
+                                <label  for="stockminimo">Cantidad mínima</label>
+                            </div>
+    
+    
+                            
+                        </div>
+    
+                    </section>
+    
+                </section>
+
+                <!-- sesion 3 del formulario -->
+                <section id="sesion_formulari_3">
+
+                    <section class="lado_info_personal">
+
+                        <div id="conten_titulo_div">
+                            <p>Ubicación</p>
+                        </div>
+    
+                        <div class="conten_inputs_1">
+                            
+                            <div class="campo_2">
+                                <select id="ubicacion" name="ubicacion" class="input_campo" required>
+                                    <option value="Ninguna">Seleccione el lugar</option>
+                                    <option value="Bodega">Bodega</option>
+                                    <option value="Almacen">Almacén</option>
+                                </select>
+                                <label  for="ubicacion">Ubicación</label>
+                            </div>
+    
+                            <div class="campo_2">
+                                <input type="text" name="estante" id="estante"  class="input_campo" maxlength="10" required>
+                                <label  for="estante">Número de estante</label>
+                            </div>
+    
+                        </div>
+                        
+                    </section>
+
+                    <section class="lado_info_contacto">
+
+                        <div class="conten_titulo_div_2">
+                            <p></p>
+                        </div>
+    
+                        <div class="content_inputs_2">
+    
+                            <p class="icono_listo"><i class="lni lni-checkmark"></i></p>
+                            
+                        </div>
+    
+                    </section>
+    
+  
+                        
+
+                </section>
+
+            </div>
+            <div id="conten_buttons">
+
+                <div class="conten_buttons_2">
+                    <a id="enlace_regresar" class="stylo_btn_regresar" href="/muestra_productos"><i class="lni lni-arrow-left"></i></a>
+                </div>
+                <div class="conten_buttons_2">
+                    <a id="btn-continuar_1" class="boton_registrar">Continuar</a>
+                </div>
+                
+
+                <section id="sesion_boton_2">
+                    
+                    <div class="conten_buttons_2">
+                        <a id="btn-volver_1" class="stylo_btn_regresar"><i class="lni lni-arrow-left"></i></a>
+                    </div>
+
+                    <div class="conten_buttons_2">
+                        <a id="btn-continuar_2" class="boton_registrar">Continuar</i></a>
+                    </div>
+                    
+                </section>
+
+                <section id="sesion_boton_3">
+                    <div class="conten_buttons_2">
+                        <a id="btn-volver_2" class="stylo_btn_regresar"><i class="lni lni-arrow-left"></i></a>
+                    </div>
+                    <div class="conten_buttons_2">
+                        <button class="boton_registrar" id="btn-registrar" onclick="animacion_envio()" >Registrar</button>
+                    </div>
+
+                    
+                </section>
+
+            </div>
+
+        </form>
+
+<!-- ----------------------------------modal de nuevo proveedor------------------------------------------------------------>
+        <div id="modal_inicio" style="display: none;"> 
+            <div class="modal-content">
+                <form action="/crearProveedores" method="post" id="formularito">
+                    <div id="pag_1" class="campos">
+                        <div id="nombre" class="campo_icono">
+                            <i class="lni lni-user"></i>
+                            <input type="text" name="nombre" maxlength="25" minlength="2"
+                            pattern="[a-zA-Z ]{2,25}" autocomplete="given-name" placeholder="Nombre" required>
+                        </div>
+                        <div id="contacto" class="campo_icono">
+                            <i class="lni lni-mobile"></i>
+                            <input type="tel" name="contacto" inputmode="tel" pattern="[0-9]{10}" maxlength="10" minlength="10" placeholder="Celular" required>
+                        </div>
+                        <div id="ciudad" class="campo_icono">
+                            <i class="lni lni-home"></i>
+                            <input type="text" name="ciudad" maxlength="14" minlength="2" pattern="[a-zA-Z]{2,14}" placeholder="Ciudad" required>
+                        </div>
+                    </div>
+                    <div id="pag_2" class="campos">
+                        <div id="documento" class="campo_icono">
+                            <i class="lni lni-postcard"></i>
+                            <input type="number" name="documento" pattern="[0-9]{10}" maxlength="10" minlength="6" autocomplete="off" placeholder="Documento" required>
+                            <label for="documento" id="label_docu">Por favor,ingrese el número de documento sin guiones</label>
+                        </div>
+                        <div id="correo" class="campo_icono">
+                            <i class="lni lni-envelope"></i>
+                            <input type="email" name="correo" inputmode="email" maxlength="56" placeholder="Correo" required>
+                        </div>
+                        <div id="direccion" class="campo_icono">
+                            <i class="lni lni-map-marker"></i>
+                            <input type="text" name="direccion" maxlength="56" minlength="2" placeholder="Dirección" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn" value="Registrar">REGISTRAR</button>
+                </form>
+            </div>
+        </div>
+
+
+<!-----------------------------------------modal del crear categoria---------------------------------------------->
+
+
+    <div id="contenedorM_categoria" style="display: none;">
+        <form action="/registrar_categorias" method="post" id="conten_formulario_2">
+
+            <div id="conten_FORM">
+
+            
+
+                <section id="lado_info_personal">
+
+                    <div id="conten_titulo_div">
+                        <p>Nombre de la categoría</p>
+                    </div>
+
+
+                    <div id="conten_inputs_1">
+                        
+
+
+                        <div class="campo_2">
+                            <input type="text" name="nom_categoria" id="nombre" class="input_campo" required>
+                            <label id="label_nombre" for="nombre">Categoria</label>
+                        </div>
+
+                    </div>
+                    
+                </section>
+
+                <section id="lado_info_contacto">
+
+                    <div id="conten_titulo_div_2">
+                        <p> </p>
+                    </div>
+
+                    <div id="content_inputs_2">
+
+
+                        <p class="icono_listo"><i class="lni lni-tag"></i></p>
+                        
+
+                    </div>
+
+
+                </section>
+
+
+            </div>
+            <div id="conten_buttons">
+                <div class="conten_buttons_2">
+                    <a href="/categorias" id="enlace_regresar">Volver</a>
+                </div>
+                <div class="conten_buttons_2">
+                    <button type="submit" id="boton_registrar" onclick="animacion_envio()" >Finalizar</button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+
+
+<!-- --------------------------------------final de modales----------------------------------------------->
+    </main>
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../static/javaScript/jquery.leanModal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../static/javaScript/sesiones_formulario_registro_productos.js"></script>
+
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+        
+</body>
+</html>

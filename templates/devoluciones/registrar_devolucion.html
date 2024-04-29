@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar devoluciones</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/devoluciones/registrar_devolucion.css">
+</head>
+<body>
+    <main id="inicio">
+        
+        <div id="conten_titulo_lado_1">
+            <h2>CREAR DEVOLUCIÓN</h2>
+        </div>
+        
+        <form action="/crear_devolucion" method="post" id="conten_formulario_2">
+
+            <div class="campos">
+                <input type="number" name="num_factura" id="num_factura" placeholder="Numero de factura" class="campo">
+                <input type="text" name="cliente_devolucion" id="cliente_devolucion" placeholder="Documento del cliente" class="campo">
+
+                <input type="text" name="producto_devolucion" id="producto_devolucion" placeholder="Nombre del producto" class="campo">
+                <input type="number" name="cantidad_proddevolucion" id="cantidad_proddevolucion" placeholder="Cantidad a devolver" class="campo">
+
+                <input type="number" name="precio_proddevolucion" id="precio_proddevolucion" placeholder="Valor" class="campo">
+                <input type="text" name="motivo_devolucion" id="motivo_devolucion" placeholder="Motivo de la devolucion" class="campo" >
+            </div>
+            <div class="subtitulos">
+                
+                <label for="monto_total_devolucion">Valor total</label>
+                <input type="number" name="monto_total_devolucion" id="monto_total_devolucion" placeholder="Valor total" class="campo">
+                <label for="fecha_devolucion">Fecha de la devolucion</label>
+                <input type="date" name="fecha_devolucion" id="fecha_devolucion"  class="campo">
+                
+            </div>
+            <div>
+                <button type="submit">Guardar</button>
+            </div>
+
+        </form>
+    
+        <div id="regresar">
+            <a href="{{url_for ('muestraDevoluciones') }}" class="campo_a">
+                <i id="atras" class="lni lni-arrow-left"></i>
+            </a>
+        </div>
+    </main>
+</body>
+</html>

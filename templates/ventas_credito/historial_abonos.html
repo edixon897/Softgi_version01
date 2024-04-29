@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../static/css/ventas/ventas_credito/historial_modal.css">
+</head>
+<body>
+    <main id="conten_modal">
+        <section id="Titulo_modal">
+            <p>Historial de pagos parciales</p>
+            
+            <a href="#" onclick="cerrarModal_2()"><i class="lni lni-close"></i></a>
+        </section>
+        <section id="Tabla_modal">
+
+            <div id="conten_tabla_modal">
+                <table  class="content-table" id="tabla_modal">
+                    <thead >
+                        <tr>
+                            <th>Pagos realizados</th>
+                            <th>C.C operador</th>
+                            <th>Fecha</th>
+            
+                        </tr>
+                    </thead>
+            
+                    <tbody>
+                        {% for c in resul %}
+                        <tr>
+            
+                            {% for i in range(0,3) %}
+
+                                {% if i==0 %}
+                                    <td class="clase1">$ {{ "{:,.0f}".format(c[i] | int) }}</td>
+
+                                {% else %}
+                                    <td>{{c[i]}}</td>
+                                
+                                {% endif %}
+
+                                
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+    
+        </section>  
+
+    </main>
+
+</body>
+</html>

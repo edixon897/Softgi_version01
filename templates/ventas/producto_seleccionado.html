@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../static/css/ventas/seleccion_muchos_productos.css">
+</head>
+<body>
+
+
+    <form action="/confirma_p_seleccionado" method="post" id="CONTEN_FORM_2">
+
+        <div id="div_titulo">
+            <p>Digita la cantidad</p>
+        </div>
+
+        <div id="div_input">
+            <input type="hidden" name="id_producto" placeholder="Código del producto" value="{{id_p}}" required>
+            <input type="hidden" name="nombre_producto" value="{{nom_p[0]}}">
+            <input type="hidden" name="precio_unidad" value="{{nom_p[1]}}">     
+            <input type="hidden" name="Stock_disponible" value="{{nom_p[2]}}">
+
+            <input type="number" name="cantidad_digitada" required id="input_cantidad" autofocus> 
+        </div>
+
+        <div id="div_btns">
+            <section id="conten_btn_1" >
+                <a href="#" onclick="cerrarModal_2()">Cancelar</a>
+            </section>
+            <section id="conten_btn_2">
+                <button type="submit">Realizar</button>
+            </section>
+            
+        </div>
+
+    </form>
+
+</body>
+</html>

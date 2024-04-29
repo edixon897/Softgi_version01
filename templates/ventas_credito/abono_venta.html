@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../static/css/ventas/ventas_credito/abpno_credito.css">
+</head>
+<body>
+
+    
+    <form action="/confirma_abono_2" method="post">
+
+        <div id="div_titulo">
+            <p>Pago parcial</p>
+        </div>
+
+        <div id="div_input">
+            <input type="hidden" name="contador" value="{{cont}}" required readonly >
+            <input type="number" placeholder="" name="abono" required >
+        </div>
+ 
+        <div id="div_btns">
+            <section id="conten_btn_1" >
+                <a href="#" onclick="cerrarModal()">Cancelar</a>
+            </section>
+            <section id="conten_btn_2">
+                <button type="submit">Realizar</button>
+            </section>
+            
+        </div>
+
+    </form>
+</body>
+</html>

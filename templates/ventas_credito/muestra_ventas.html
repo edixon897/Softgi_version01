@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas a credito</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/ventas/ventas_credito/muestra_ventas_credito.css">
+</head>
+<body>
+
+
+    <main id="cuerpo">
+
+
+
+        <section id="section_sombra" onclick="cerrar_nav()">
+
+            <section id="conten_desplegable" onclick="detener_Propagacion(event)">
+
+                <div id="conten_logo_user">
+                    <figure id="conten_icono_u">
+                        <img id="icono_user" src="../../static/image/circulo-de-usuario (3).png" alt="icono usuario">
+                    </figure>
+                    <div id="conten_nombre_2">
+                        <p>{{session['nom_empleado']}}</p>
+                    </div>
+                </div>
+
+                <div id="conten_info_cuerpo">
+
+                    <section id="lado_1">
+                        <p>Rol: {{session['rol']}}</p>
+                    </section>
+                    <section id="lado_2">
+
+                       <a onclick="return confirm('¿Seguro que deseas cerrar la session?')" href="/"><i id="icono_cerrar_session" class="lni lni-exit"></i></a>  <a onclick="return confirm('¿Seguro que deseas cerrar la session?')" id="enlace_exit" href="/">Cerrar session</a>
+
+                       <div id="conten_btn_cerrar" onclick="cerrar_nav()">
+                        <i class="lni lni-close"></i>
+                       </div>
+                    </section>
+
+                </div>
+
+                
+                
+            </section>
+
+        </section>
+
+
+
+
+
+
+
+
+        <section id="conten_registra_pago" onclick="cerrarModal(),cerrarModal_2()">
+
+            <div id="modalContenedor" onclick="detenerPropagacion(event)" style="display: none; opacity: 0;"></div>
+            <div id="modalContenedor_2" onclick="detenerPropagacion(event)" style="display: none; opacity: 0;"></div>
+
+        </section>
+
+        <section id="section_1">
+            <p>Historial de créditos</p>
+            <i id="menu" class="lni lni-menu" onclick="abrir_nav()"></i>
+        </section>
+
+
+        <section id="section_2">
+
+            <div id="conten_botones">
+                <div id="conten_regresar">
+                    <a href="{{url_for ('inicio') }}" id="isla_1">
+                        <i id="boton_back" class="lni lni-home"></i>
+                    </a>
+                </div>
+                <div id="conten_btn_navegacion">
+                    <div id="isla_2">
+                        <a class="botones" id="Muestra_ventas" onclick="disminuye_tamaño_isla()">Ventas efectivo</a>
+                        <a class="botones"  href="{{url_for('verCrear_ventas')}}">Nueva venta</a>
+                        <a class="botones" id="enlace_salida" href="{{url_for('creditos_pagos')}}">Creditos pagados</a>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div id="conten_tabla">
+
+                <div id="isla_3">
+                    <section id="section_buscador_titulo">
+                        
+                        <div id="conten_titulo">
+                            <p>Ventas a crédito</p>
+                        </div>
+                        <form id="form_conten">
+                            <i id="icono_busqueda" class="lni lni-search-alt"></i>
+                            <input type="search" id="buscador_ventas" name="dato_busqueda" placeholder="">
+                        </form>
+
+                    </section>
+                    <section id="section_tabla_info">
+                        <div id="conten_t">
+                            <table id="tablaVentas">
+                                <thead>
+                                    <tr>
+                                        <th> C.C. cliente</th>
+                                        <th>Productos</th>
+                                        <th>Crédito total</th>
+                                        <th>Crédito restante</th>
+                                        <th>Vendedor</th>
+                                        <th>Fecha de venta</th>
+                                        <th></th>
+                                        <th></th>
+                                        
+                                    </tr>
+                                </thead>
+                                    <tbody>
+                                        {% for result in resul %}
+                                        <tr>
+                                            {% for i in range(1, 7) %}
+                                                <td {% if i in [3, 4] %} class="clase1" {% endif %}>
+                                                    {% if result[i] is defined %}
+                                                        {% if i in [3, 4] %}
+                                                            $ {{ "{:,.0f}".format(result[i] | int) }}
+                                                        {% else %}
+                                                            {{ result[i] }}
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {{ result[i] }}
+                                                    {% endif %}
+                                                </td>
+                                            {% endfor %}
+                                            <td class="btns_centro">
+                                                <a href="#" onclick="abrirModal_2('{{result[0]}}')"><!-- /abono_credito_2/{{result[0]}} -->
+                                                    <i id=icono_3 class="lni lni-stats-up"></i>
+                                                </a>
+                                            </td>
+  
+                                            <!-- Hola -->
+
+                                            <td class="btns_centro">
+                                                <a href="#" onclick="abrirModal('{{result[0]}}')"><!-- /abono_credito_2/{{result[0]}} -->
+                                                    <i id=icono_3 class="lni lni-dollar"></i>
+                                                </a>
+                                            </td>
+
+
+                                            
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+
+                                
+                                <p id="noResults" style="display: none;">No se encontraron resultados</p>
+                            </table>
+                        </div>
+                    </section>
+
+                </div>
+
+            </div>
+
+        </section>
+        
+        <input type="hidden" value="{{msj}}" id="input_error" oninput="verifica_input()">
+        <input type="hidden" value="{{session['rol']}}" id="input_rol" oninput="verifica_input_rol()">
+        <input type="hidden" value="{{session['rol']}}" id="input_valida_ventas" >
+    </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/static/javaScript/modal_historial_creditos.js"></script>
+    <script src="/static/javaScript/buscarHistorialVentas.js"></script>
+</body>
+</html>

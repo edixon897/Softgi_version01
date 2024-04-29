@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compras proveedores</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/compra_proveedores/muestra_compras_prove.css">
+    <link rel="stylesheet" href="../../static/css/compra_proveedores/registrar_compra_proveedores.css">
+</head>
+<body>
+
+    <main id="cuerpo">
+
+        <section id="section_1">
+            <p>Compras a proveedores</p>
+        </section>
+
+        <section id="section_2">
+
+            <div id="conten_botones">
+                <div id="conten_regresar">
+                        <a href="{{url_for ('inicio') }}" id="isla_1">
+                            <i id="boton_back" class="lni lni-home"></i>
+                        </a>
+                </div>
+                <div id="isla_2">
+                    <div id="conten_btn_navegacion">
+                        <button class="botones" id="botonAbrirModalBtn">Registrar compra</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="conten_tabla">
+
+                <div id="isla_3">
+                    <section id="section_buscador_titulo">
+                        
+                        <div id="conten_titulo">
+                            <p>Mis compras</p>
+                        </div>
+                        <form id="form_conten">
+                            <i id="icono_busqueda" class="lni lni-search-alt"></i>
+                            <input type="search" id="buscador_2" name="BuscaCompraProveedores" placeholder="">
+                        </form>
+
+                    </section>
+                    <section id="section_tabla_info">
+                        <div id="conten_t">
+                            <table id="tabla_compraProveedor">
+                                <thead>
+                                    <tr>
+                                        <th>Número factura del proveedor</th>
+                                        <th>C.C./NIT proveedor</th>
+                                        <th>Nombre proveedor</th>
+                                        <th>Nombre operador</th>
+                                        <th>Fecha de compra</th>
+                                        <th>Dirección</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            
+                                <tbody>
+                                    {% for c in resul %}
+                                    <tr>
+                                        {% for i in range(1,8) %}
+                                            
+                                            <td>{{ c[i] }}</td>
+                                            
+                                        {% endfor %}
+
+                                        <td class="btns_centro">
+                                            <button onclick="abrirModalEditCompra('{{c[0]}}')" class="btn_editar">
+                                                <i id="icono_ver_mas" class="lni lni-pencil"></i>
+                                            </button>
+                                        </td>
+                                        
+                                        <td class="btns_centro">
+                                            <a  href="muestra_detalles_com/{{c[0]}}">
+                                                <i id=icono_3 class="lni lni-circle-plus"></i>
+                                            </a>
+                                        </td>
+
+                                        <td class="btns_centro">
+                                            <button onclick="eliminarCompraAproveedor('{{c[0]}}')" class="btn_eliminar">
+                                                <i id="icono_3" class="lni lni-trash-can"></i>
+                                            </button>
+                                        </td>
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <p id="noResults" style="display: none;">No se encontraron resultados</p>
+                            </table>
+                        </div>
+                    </section>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+    {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+    {% endwith %}
+
+
+
+<!------------------------ Modal de registro compra proveedor ------------------------>
+
+    <div id="crearCompraModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p><strong>REGISTRAR COMPRA</strong></p>
+            <form id="compraform" action="Registrar_compra_p" method="post">
+                <!-- Campos para el primer producto -->
+                <div id="producto_1" class="producto">
+                    <div id="num_fac">
+                        <input type="text" name="num_factura_proveedor" placeholder="Número de factura" class="campo" required>
+                    </div>
+                    <div id="fecha_compra">
+                        <label for="fecha_compra">Fecha</label>
+                        <input type="date" name="fecha_compra" id="fecha_compra_input" class="campo" required>
+                        <span id="error_fecha" style="color: red; display: none;">La fecha no puede ser mayor al día de hoy.</span>
+                    </div>
+                    <div id="proveedor">
+                        <label for="proveedor_compra">Proveedor</label>
+                        <select name="proveedor_compra" class="input_campo" required>
+                            <option value="">Proveedor</option>
+                            {% for c in prove %}
+                                <option value="{{c[0]}}">{{c[1]}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <input type="text" name="producto_compra[]" placeholder="Producto" class="campo" required>
+                    </div>
+                    <div>
+                        <input type="number" name="cantidad_compra[]" placeholder="Cantidad" class="campo" min="0" required>
+                    </div>
+                    
+                    <div>
+                        <input type="number" name="valor_unidad[]" placeholder="Valor por unidad" class="campo" required>
+                    </div>
+                </div>
+                
+                <!-- Botón para agregar más productos -->
+                <button class="btn" type="button" onclick="agregarProducto()">Agregar producto</button>
+
+                <button type="submit" value="registrar" class="btn">Registrar</button>
+            </form>
+            
+        </div>
+    </div>
+
+    <div id="modalContainer"></div><!-- Modal para editar compra a proveedores , No Borrar-->
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../../static/javaScript/modal_form_compraProveedores.js"></script>
+    <script src="../../static/javaScript/buscarCompras_prove.js"></script>
+    <script src="../../static/javaScript/modal_actualizar_proveedor.js"></script>
+    <script src="../../static/javaScript/control_fecha_registro_compraprovee.js"></script>
+<script>
+    var productoCount = 1; // Contador de productos
+
+    function agregarProducto() {
+        productoCount++; // Incrementa el contador de productos
+        var nuevoProducto = document.createElement("div");
+        nuevoProducto.id = "producto_" + productoCount;
+        nuevoProducto.classList.add("producto");
+        nuevoProducto.innerHTML = `
+            <div>
+                <input type="text" name="producto_compra[]" placeholder="Producto" class="campo">
+            </div>
+            <div>
+                <input type="number" name="cantidad_compra[]" placeholder="Cantidad" class="campo">
+            </div>
+            <div>
+                <input type="number" name="valor_unidad[]" placeholder="Valor por unidad" class="campo">
+            </div>`;
+
+        // Insertar el nuevo producto antes del botón "Agregar producto"
+        var botonAgregar = document.querySelector("button[type='button']");
+        botonAgregar.parentNode.insertBefore(nuevoProducto, botonAgregar);
+    }
+</script>
+
+
+    <script>
+        function abrirModalEditCompra(documento) {
+            $.ajax({
+                url: `/edita_compras_provee/${documento}`,
+                type: 'GET',
+                success: function(data) {
+                    $('#modalContainer').html(data); // Insertar el contenido del modal en el contenedor
+                    $('#ModalEditCompra').show(); // Mostrar el modal
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+            
+            $(window).click(function (e) {
+                if (e.target.id === "ModalEditCompra") {
+                    $("#ModalEditCompra").hide();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

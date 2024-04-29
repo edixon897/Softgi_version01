@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&family=Poppins:wght@300;500&display=swap');
+
+#recuperar_psw{
+    position: relative;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+#recuperar_contrasena{
+    display: flex;
+    flex-direction: column;
+    margin: 4px 0 6px 0;
+    width: 80%;
+}
+#recuperar_contrasena label{
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+}
+
+#recuperar_contrasena input{
+    border: solid 1px #aaa;
+    border-radius: 5px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 6px 0;
+    padding: 10px 10px 10px 45px;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+}
+
+#recuperar_contrasena > i{
+    border-radius: 10%;
+    color: #358CB4;
+    padding: 10px 15px;
+    position: absolute;
+    transform: translateY(65%);
+    z-index: 3;
+}
+
+
+.contenedor_recuperar_psw{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 12px;
+}
+
+h3{
+    color: #358CB4;
+}
+
+#btn{
+    background-color: #358CB4;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 0.9em;
+    margin: 10px;
+    padding: 8px 17px;
+    width: 60%;
+    height: 15%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* #recuperar_psw input{
+    border: solid 1px #aaa;
+    border-radius: 5px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 6px 0;
+    padding: 10px 10px 10px 45px;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+}
+
+#recuperar_psw > i{
+    border-radius: 10%;
+    color: #358CB4;
+    left: 3px;
+    padding: 10px;
+    position: absolute;
+    transform: translateY(18%);
+    z-index: 3;
+    }
+
+
+.btn{
+    background-color: #358CB4;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 0.9em;
+    margin: 10px;
+    padding: 8px 17px;
+    width: 60%;
+    height: 15%;
+}
+
+.aclaracion{
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    }
+ */

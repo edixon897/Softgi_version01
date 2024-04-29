@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotizaciones</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/cotizaciones/muestra_cotizaciones.css">
+</head>
+<style>
+    .modal {
+  display: none; /* Ocultar el modal por defecto */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* Ajustar el margen superior para centrar verticalmente */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%; /* Ajustar el ancho del modal */
+  text-align: center; /* Centrar el contenido del modal */
+}
+
+/* Estilos para el botón de cierre */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
+
+<body>
+
+    <main id="cuerpo">
+
+        <section id="section_1">
+            <p>Cotizaciones</p>
+        </section>
+
+
+        <section id="section_2">
+
+            <div id="conten_botones">
+                <div id="conten_regresar">
+                        <a href="{{url_for ('inicio') }}" id="isla_1">
+                            <i id="boton_back" class="lni lni-home"></i>
+                        </a>
+                </div>
+                <div id="conten_btn_navegacion">
+                    <div id="isla_2">
+                        <button class="botones" id="openCrearCotizacionModal">Agregar cotización</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="conten_tabla">
+
+                <div id="isla_3">
+                    <section id="section_buscador_titulo">
+                        
+                        <div id="conten_titulo">
+                            <p>Todas las cotizaciones</p>
+                        </div>
+                        <form id="form_conten">
+                            <i id="icono_busqueda" class="lni lni-search-alt"></i>
+                            <input type="search" id="searchCotizacion" name="busqueda" placeholder="Buscar  por nombre o código de barras..."/> 
+                        </form>
+
+                    </section>
+                    <section id="section_tabla_info">
+                        <div id="conten_t">
+                            <table id="cotizacionTable">
+                                <thead>
+                                    <tr>
+                                        <th>C.C. cliente</th>
+                                        <th>Nombre</th>
+                                        <th>Fecha de inicio</th>
+                                        <th>Fecha final</th>
+                                        <th>Vendedor</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            
+                                <tbody>
+                                    {% for c in datos %}
+                                    <tr>
+                                        {% for i in range(1, 6) %}
+                                            
+                                            <td>{{ c[i] }}</td>
+                                            
+                                        {% endfor %}
+                                        <td class="btns_centro">
+                                            <a href="/editarCotizacion/{{c[0]}}"><i id="icono_ver_mas" class="lni lni-pencil"></i></a>
+                                        </td>
+                                        <td class="btns_centro">
+                                            <a href="{{ url_for('nuevo_detalle', id_cotizacion=c[0]) }}">
+                                                <i id="icono_3" class="lni lni-circle-plus"></i>
+                                            </a>
+                                        </td>
+                                        <td class="btns_centro btn_eliminar" style="visibility: hidden;">
+                                            <button onclick="eliminarCotizacion('{{c[0]}}')" >
+                                                <i id=icono_2 class="lni lni-trash-can"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <a href="/detalle/{{c[0]}}"><i id="btn_print" class="lni lni-printer"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <p id="noResults" style="display: none;">No se encontraron resultados</p>
+                            </table>
+                        </div>
+                    </section>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+    <!-- Modal de éxito -->
+    <div id="modalExito" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p> {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                {% endif %}
+    {% endwith %}</p>
+        </div>
+    </div>
+  
+   
+    <div id="modalContainer"></div>
+
+    <input type="hidden" value="{{session['rol']}}" id="input_rol" oninput="verifica_input_rol()">
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
+    
+    <script src="/static/javaScript/cotizacion.js"></script>
+    <script src="/static/javaScript/buscarCotizacion.js"></script>
+    <script>
+    $(document).ready(function(){
+    
+    $("#openCrearCotizacionModal").click(function(){
+        
+        // Cargar el contenido del modal desde crearCotizacion.html
+        $.ajax({
+            url: "/modalCrear",
+            type: 'GET',
+            success: function(data) {
+                $('#modalContainer').html(data); // Insertar el contenido del modal en el contenedor
+                $('#crearCotizacionModal').show(); // Mostrar el modal
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+    
+    // Ocultar el modal al hacer clic fuera de él y recargar la página
+    $(document).on('click', function(e) {
+        if ($(e.target).is('#crearCotizacionModal')) {
+            $('#crearCotizacionModal').hide();
+            location.reload(); // Recargar la página
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Obtener mensajes flash
+    var mensajesFlash = "{{ get_flashed_messages() }}";
+    
+    // Verificar si hay algún mensaje flash presente y si tiene al menos 5 caracteres
+    if (mensajesFlash && mensajesFlash.length >= 5) {
+        // Mostrar el modal
+        var modal = document.getElementById("modalExito");
+        modal.style.display = "block";
+        
+        // Ocultar el modal después de 5 segundos
+        setTimeout(function() {
+            modal.style.display = "none";
+        }, 3000);
+    }
+    
+    // Agregar un evento de escucha para cerrar el modal cuando se hace clic fuera de él
+    window.addEventListener("click", function(event) {
+        var modal = document.getElementById("modalExito");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+});
+
+
+
+
+    </script>
+</body>
+</html>

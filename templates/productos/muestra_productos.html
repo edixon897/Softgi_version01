@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="../../static/css/productos/muestra_productos.css">
+
+</head>
+<body>
+
+    <main id="cuerpo">
+
+        <section id="conten_registra_pago" onclick="cerrarModal_2()">
+
+            <div id="modalContenedor_2" onclick="detenerPropagacion(event)" style="display: none; opacity: 0;"></div>
+            
+        </section>
+
+
+        <section id="section_1">
+            <p>Productos</p>
+        </section>
+
+
+        <section id="section_2">
+
+            <div id="conten_botones">
+                <div id="conten_regresar">
+                        <a href="{{url_for ('inicio') }}" id="isla_1">
+                            <i id="boton_back" class="lni lni-home"></i>
+                        </a>
+                </div>
+                <div id="conten_btn_navegacion" >
+                    <div id="isla_2">
+                        <a class="botones" id="btn_crear" style="display: none;" href="{{url_for('crear_Producto')}}" >Crear producto</a>
+                        <a class="botones" href="{{url_for('categorias')}}">Categorías</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="conten_tabla">
+
+                <div id="isla_3">
+                    <section id="section_buscador_titulo">
+                        
+                        <div id="conten_titulo">
+                            <p>Todos mis productos</p>
+                        </div>
+                        <form id="form_conten">
+                            <i id="icono_busqueda" class="lni lni-search-alt"></i>
+                            <input type="search" id="searchProductos" name="searchProductos" placeholder="Buscar..."/>
+                        </form>
+                    </section>
+                    <section id="section_tabla_info">
+                        <div id="conten_t">
+                            
+                            <table id="Tabla_product">
+                                <thead>
+                                    <tr>
+                                        <th>Codigo</th>
+                                        <th>Referencia</th>
+                                        <th>Categoría</th>
+                                        <th>Proveedor</th>
+                                        <th>Nombre del producto</th>
+                                        <th>Precio de compra</th>
+                                        <th>Precio de venta</th>
+                                        <th>Cantidad</th>
+                                        <th>Descripción</th>
+                                        <th>Cantidad mínima</th>
+                                        <th>Ubicación</th>
+                                        <th>Estante</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for c in resul %}
+                                    <tr>
+                                        <td id="{{ c[0] }}">{{ c[0]}}</td> <!-- codigo(id) -->
+                                        <td>{{ c[1] }}</td> <!-- Referencia #1 -->
+                                        <td>{{ c[4] }}</td> <!-- Categoría -->
+                                        <td>{{ c[5] }}</td> <!-- Proveedor -->
+                                        <td>{{ c[6] }}</td> <!-- Nombre del producto -->
+                                        <td class="campo_dinero1 7"> $ {{ "{:,.0f}".format(c[7]) }}</td> <!-- Precio de compra -->
+                                        <td class="campo_dinero1 8"> $ {{ "{:,.0f}".format(c[8]) }}</td> <!-- Precio de venta -->
+                                        <td class="{% if c[9] <= c[11] %} valor_menor {% else %} valor_mayor {% endif %}">{{ "{:,.0f}".format(c[9]) }}</td> <!-- Cantidad -->
+                                        <td>{{ c[10] }}</td> <!-- Descripción -->
+                                        <td class="color_stock_minimo">{{ c[11] }}</td> <!-- Cantidad mínima -->
+                                        <td>{{ c[12] }}</td> <!-- Ubicación -->
+                                        <td>{{ c[13] }}</td> <!-- Estante -->
+                                        <td></td> <!-- Esta columna está vacía -->
+                                        <td></td> <!-- Esta columna está vacía -->
+                                        <td></td> <!-- Esta columna está vacía -->
+
+                                        <td class="btns_centro">
+
+                                            <button onclick="abrirModal_2('{{c[0]}}')">
+                                                <i id="icono_3" class="lni lni-plus"></i>
+                                            </button>
+
+
+                                        </td>
+                                        
+                                        <td class="btns_centro">
+                                            <button onclick="abrirModalEditCompra('{{c[0]}}')" class="btn_editar">
+                                                <i id="icono_ver_mas" class="lni lni-pencil"></i>
+                                            </button>
+                                        </td>
+                                        
+                                        <td class="btns_centro">
+                                            <button onclick="eliminarPruducto('{{c[0]}}')">
+                                                <i id="icono_2" class="lni lni-trash-can"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    {% endfor %}
+                                </tbody>
+                        
+                                <p id="noResults" style="display: none; ">No se encontraron resultados</p>
+                            </table>
+                        </div>
+                    </section>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+ 
+
+    
+<div id="modalContainer"></div> <!-- no borrar -->
+
+    <input type="hidden" value="{{msj}}" readonly id="input_verificacion" oninput="validador_input()">
+    <input type="hidden" value="{{session['rol']}}" id="input_rol" oninput="verifica_input_rol()">
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../static/javaScript/buscarProducto.js"></script>
+    <script src="../../static/javaScript/modal_edita_producto.js"></script>
+    <script src="../../static/javaScript/modal_editar_cantidad_produto.js"></script>
+</body>
+</html>
+
+

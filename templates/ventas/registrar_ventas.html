@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar venta</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/ventas/crea_venta.css">
+    
+</head>
+<body>
+
+    <main id="cuerpo">
+
+
+        <section id="section_sombra" onclick="cerrar_nav()">
+
+            <section id="conten_desplegable" onclick="detener_Propagacion(event)">
+
+                <div id="conten_logo_user">
+                    <figure id="conten_icono_u">
+                        <img id="icono_user" src="../../static/image/circulo-de-usuario (3).png" alt="icono usuario">
+                    </figure>
+                    <div id="conten_nombre_2">
+                        <p>{{session['nom_empleado']}}</p>
+                    </div>
+                </div>
+
+                <div id="conten_info_cuerpo">
+
+                    <section id="lado_1">
+                        <p>Rol: {{session['rol']}}</p>
+                    </section>
+                    <section id="lado_2">
+
+                       <a onclick="return confirm('¿Seguro que deseas cerrar la session?')" href="/"><i id="icono_cerrar_session" class="lni lni-exit"></i></a>  <a onclick="return confirm('¿Seguro que deseas cerrar la session?')" id="enlace_exit" href="/">Cerrar session</a>
+
+                       <div id="conten_btn_cerrar" onclick="cerrar_nav()">
+                        <i class="lni lni-close"></i>
+                       </div>
+                    </section>
+
+                </div>
+
+                
+                
+            </section>
+
+        </section>
+
+
+        <section id="conten_registra_pago" onclick="cerrarModal_2(), cerrarModal_3()">
+
+            <div id="modalContenedor_2" onclick="detenerPropagacion(event)" style="display: none; opacity: 0;"></div>
+            <div id="modalContenedor_3" onclick="detenerPropagacion(event)" style="display: none; opacity: 0;"></div>
+
+        </section>
+
+        <section id="section_1">
+            <p>Nueva venta</p>
+            <i id="menu" class="lni lni-menu" onclick="abrir_nav()"></i>
+        </section>
+
+        <section id="section_2">
+
+            <div id="conten_1">
+
+                <div id="conten_tabla_1">
+
+                    <section id="conten_busqueda">
+
+                        <div id="titulo">
+                            <p>Producto</p>
+                        </div>
+
+                        <form id="form_conten">
+                            <i id="icono_busqueda" class="lni lni-search-alt"></i>
+                            <input type="search" placeholder="" aria-label="Search" name="id_nombre" id="buscador">
+                        </form>
+                        
+                    </section>
+                    <section id="conten_tabla">
+                        <div id="cont_t">
+                            <table id="tabla">
+                                <thead >
+                                    <tr>
+                                        <th>Referencias</th>
+                                        <th>Nombre del producto </th>
+                                        <th>Precio unitario</th>
+                                        <th>Cantidad disponible</th>
+                                        <th>Seleccionar varios productos</th>
+                                        <th>Seleccionar un producto</th>
+                                    </tr>
+                                </thead>
+                    
+                                <tbody>         
+                                    {% for c in prod %}
+                                    <tr>
+                                        {% for i in range(1,5) %}
+                                            {% if i==3 %}
+                                            <td class="costo">${{ "{:,.0f}".format(c[i]|float) }}</td>
+
+                                            {% else %}
+                                                <td>{{c[i]}}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                            
+                                            <td>
+                                                <a href="#" onclick="abrirModal_2('{{c[0]}}')">
+                                                    <i id="icono_select_2" class="lni lni-layers"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="/selector_una_cantidad/{{c[0]}}"><!-- <i id="icono_select_1" class="lni lni-cart"></i> -->  <i id="icono_select_1" class="lni lni-select-cursor"></i></a>
+                                            </td>
+                                    </tr>
+                                    
+                                    {% endfor %}
+                                </tbody>
+                                <p id="noResults" style="display: none;">No se encontraron resultados</p>
+                            </table> 
+                        </div>
+                    </section>
+
+                </div>
+
+                <div id="conten_tabla_2">
+
+                    <section id="conten_titulo">
+                        <p>Productos seleccionados</p>
+                    </section>
+
+                    <section id="conten_t_carrito">
+
+                        <div id="conten_carrito">
+                            <table id="tabla_carrito">
+                                <thead >
+                                    <tr>
+                                        <th>Nombre del producto </th>
+                                        <th>Precio unitario</th>
+                                        <th>Cantidad de unidades</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                    
+                                <tbody>         
+                                    {% for c in prod_carr %}
+                                    <tr>
+                                        {% for i in range(1,5) %}
+                                            {% if i == 2 or i == 4 %}
+                                                <td class="costo">${{ "{:,.0f}".format(c[i]|float) }}</td>
+                                            {% else %}
+                                                <td>{{c[i]}}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <td>
+                                                <a href="/elimina_p_select/{{c[0]}}"><i id="icono_delete" class="lni lni-trash-can"></i></a>
+                                            </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </section>
+
+                    <section id="conten_boton">
+                        <a class="btn_elinar_todo" href="/elimina_todo_seleccionado_p">Vaciar carrito de ventas</a>
+                    </section>
+                    
+                </div>
+
+            </div>
+
+            <form id="conten_2" action="/confirma_venta" method="post">
+
+                <div id="conten_formulario_3">
+
+                    <section id="conten_btns">
+                        <div id="separador">
+                            <a href="#" onclick="abrirModal_3()">Nuevo Cliente</a>
+                            <!-- <a href="{{url_for ('crearClientes_2') }}">Registrar cliente</a> -->
+                            <a id="Muestra_ventas" href="{{url_for ('muestra_ventas') }}"><i class="lni lni-arrow-left"></i></a>
+                        </div>
+                    </section>
+
+                    <div id="conten_form" > 
+
+                        <div id="lad_1_form">
+
+                            <div class="conten_input" id="conten_identificacion">
+                                <div class="campo_3" >
+                                    <input type="hidden" id="doc_operador" name="doc_operador" class="input_campo" value="{{operador}}"  required readonly> 
+                                    <label><i id="icono_cedula" class="lni lni-postcard"></i></label>
+                                </div>
+                            </div>
+
+                            <div class="conten_input" id="conten_input_cc_client">
+                                <div class="campo_3">
+                                    <input type="number" id="doc_cliente" name="doc_cliente" placeholder="Cédula del cliente"  class="input_campo" required>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+
+                        <div id="lad_2_form">
+                            
+                            <div class="conten_input" id="conten_input_2">
+                                <div class="campo_3" >
+                                    <select name="tipo_de_venta" class="input_campo" id="venta_tipo" oninput="verifica_tipo_venta()">
+                                        <option value="venta_normal">Venta normal</option>
+                                        <option value="venta_credito">Venta a crédito</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="conten_input" id="conten_input_1">
+                                <div class="campo_3" >
+                                    <select name="forma_de_pago" class="input_campo" id="forma_pago">
+                                        <option value="efectivo">Efectivo</option>
+                                        <option value="Nequi">Nequi</option>
+                                        <option value="Daviplata">Daviplata</option>
+                                        <option value="Bancolombia">Bancolombia</option>
+                                        <option value="Tarjeta debito">Tarjeta débito</option>
+                                        <option value="Tarjeta credito">Tarjeta crédito</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- <div id="lad_3_form">
+                            <button id="btn_enviar" class="btn_sutmit" type="submit" onclick="valida_campos() ">Confirmar venta</button>
+                        </div> -->
+            
+                    </div>
+
+                </div>
+
+                <div id="conten_precio_total">
+                    <section id="section_total_precio">
+                        <h1>${{ "{:,.0f}".format(Total|int) }}</h1>
+                    </section>
+                    <section id="section_conten_brn">
+                        <button id="btn_enviar" class="btn_sutmit" type="submit" onclick="valida_campos() ">Confirmar venta</button>
+                    </section>
+                    
+                </div>
+
+            </form>
+            
+        </section>
+
+    </main>
+    {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+    {% endwith %}
+
+    <input type="hidden" id="input_error" readonly value="{{mensaje}}" oninput="verifica_input()"> 
+    <input type="hidden" id="input_error_2" readonly value="{{mensaje_2}}" oninput="verifica_input_2()">
+    <input type="hidden" value="{{session['rol']}}" id="input_valida_ventas" >
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../static/javaScript/color_campo_lleno.js"></script>
+    <script src="../../static/javaScript/registrar_ventas.js"></script>
+
+</body>
+</html>

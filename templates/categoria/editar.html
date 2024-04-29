@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar categorias</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/categoria/editar_categorias.css">
+</head>
+<style>
+   
+</style>
+<body>
+    <div id="editarCategoriaModal" class="modal">
+        <div class="modal-content" id="modalContent">
+            <form action="/editar_categoria" method="post" id="editar_categoria">
+                <div id="conten_form">
+                    <section id="lado_edit_categoria">
+                        <p>Nombre de la categoría</p>
+                        <div id="conten_inputs">
+                            <input type="hidden" name="id_categoria" id="id_categoria" value="{{resul[0]}}">
+                            <label id="label_nombre" for="nombre">Categoría</label>
+                            <input type="text" name="nom_categoria" id="nombre" class="input_campo" value="{{resul[1]}}" required>
+                        </div>
+                        <div id="conten_buttons">
+                            <!-- <a href="/categorias" id="enlace_regresar">Volver</a> -->
+                            <button type="submit" id="boton_registrar" onclick="animacion_envio()" >Guardar</button>
+                        </div>
+                    </section>
+                    <section id="img_cat">
+                            <i class="lni lni-pencil-alt"></i>
+                    </section>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../static/javaScript/animacion_envio_edita_categoria.js"></script>
+
+</body>
+</html>

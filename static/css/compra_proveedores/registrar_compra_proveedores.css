@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&family=Poppins:wght@300;500&display=swap');
+#compraform{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+    #compraform input{
+        border: solid 1px #aaa;
+            border-radius: 5px;
+            font-family: 'Barlow', sans-serif;
+            font-weight: 400;
+            margin: 6px 0;
+            padding: 1.3em;
+            position: relative;
+            width: 100%;
+            z-index: 2;
+    } 
+
+    #proveedor{
+        display: flex;
+        flex-direction: column;
+        margin: 5px 0 0 0;
+    }
+
+        #proveedor select{
+            border-radius: 5px;
+            margin: 0 0 6px 0;
+            padding: 0.6em;
+            border: solid 1px #aaa;
+            background: transparent;
+        }
+
+    #fecha_compra{
+        display: flex;
+            flex-direction: column;
+            margin: 4px 0 6px 0;
+    }
+
+        #fecha_compra input{
+            margin: 0;
+            padding: 0.6em 15px;
+        }
+
+.campos{
+    margin: 12px;
+    position: relative;
+    /* width: 100%; */
+    flex-basis: 250px;
+}
+.btn{
+    background-color: #358CB4;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 0.9em;
+    margin: 10px;
+    padding: 8px 17px;
+    width: 80%;
+    height: 15%;
+}

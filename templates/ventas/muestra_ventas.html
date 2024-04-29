@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muestra ventas</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/ventas/muestra_ventas.css">
+</head>
+<body>
+
+    <main id="cuerpo">
+
+
+
+
+
+
+        <section id="section_sombra" onclick="cerrar_nav()">
+
+            <section id="conten_desplegable" onclick="detener_Propagacion(event)">
+
+                <div id="conten_logo_user">
+                    <figure id="conten_icono_u">
+                        <img id="icono_user" src="../../static/image/circulo-de-usuario (3).png" alt="icono usuario">
+                    </figure>
+                    <div id="conten_nombre_2">
+                        <p>{{session['nom_empleado']}}</p>
+                    </div>
+                </div>
+
+                <div id="conten_info_cuerpo">
+
+                    <section id="lado_1">
+                        <p>Rol: {{session['rol']}}</p>
+                    </section>
+                    <section id="lado_2">
+
+                       <a onclick="return confirm('¿Seguro que deseas cerrar la session?')" href="/"><i id="icono_cerrar_session" class="lni lni-exit"></i></a>  <a onclick="return confirm('¿Seguro que deseas cerrar la session?')" id="enlace_exit" href="/">Cerrar session</a>
+
+                       <div id="conten_btn_cerrar" onclick="cerrar_nav()">
+                        <i class="lni lni-close"></i>
+                       </div>
+                    </section>
+
+                </div>
+
+                
+                
+            </section>
+
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <section id="conten_registra_pago" onclick="cerrarModal_2()">
+
+            <div id="modalContenedor_2" onclick="detenerPropagacion(event)" style="display: none; opacity: 0;"></div>
+
+        </section>
+
+        <section id="section_1">
+            <p>Historial de ventas</p>
+            <i id="menu" class="lni lni-menu" onclick="abrir_nav()"></i>
+        </section>
+
+
+        <section id="section_2">
+
+            <div id="conten_botones">
+                <div id="conten_regresar">
+                        <a href="{{url_for ('inicio') }}" id="isla_1">
+                            <i id="boton_back" class="lni lni-home"></i>
+                        </a>
+                </div>
+                <div id="conten_btn_navegacion">
+                    <div id="isla_2">
+                        <a class="botones" id="enlace_ventas_credito" onclick="aumenta_tamaño_isla()">Ventas a crédito</a> <!-- href="{{url_for('muestra_ventas_credito')}}" -->
+                        <a class="botones"  href="{{url_for('verCrear_ventas')}}">Nueva venta</a>
+                        <a class="botones" id="enlace_entrante"  href="#" style="display: none;">Creditos pagados</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="conten_tabla">
+
+                <div id="isla_3">
+                    <section id="section_buscador_titulo">
+                        
+                        <div id="conten_titulo">
+                            <!-- <div id="indicador_redondo"></div> -->
+                            <p>Todas mis ventas</p>
+                        </div>
+                        <form id="form_conten">
+                            <i id="icono_busqueda" class="lni lni-search-alt"></i>
+                            <input type="search" id="buscador_ventas" name="buscador_ventas" placeholder="Buscar por nombre del cliente o número de factura">
+
+                        </form>
+
+                    </section>
+                    <section id="section_tabla_info">
+                        <div id="conten_t">
+                            <table id="tablaVentas">
+                                <thead>
+                                    <tr>
+                                        <th>Número de factura</th>
+                                        <th>C.C cliente</th>
+                                        <th>Nombre del cliente</th>
+                                        <th>Vendedor</th>
+                                        <th>Fecha de venta</th>
+                                        <th>Forma de pago</th>
+                                        <th>Más detalles</th>
+                                    </tr>
+                                </thead>
+                            
+                                <tbody>
+                                    {% for c in resul %}
+                                    <tr>
+                                        {% for i in range(0, 6) %}
+                                            {% if i == 5 %} {# Para la primera columna, que es la factura # #}
+                                                <td class="{% if c[i] == 'efectivo' %} clase1 {% elif c[i] == 'Daviplata' %} clase2 {% elif c[i] == 'Bancolombia' %} clase3 {% elif c[i] == 'Nequi' %} clase4 {% elif c[i] == 'Tarjeta cred' %} clase5 {% endif %}">{{ c[i] }}</td>
+                                                
+                                            {% else %} {# Para las otras columnas, puedes agregar más lógica según sea necesario #}
+                                                <td>{{ c[i] }}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <td class="btns_centro">
+                                            <!-- <a href="{{ url_for('muestra_detalles_ventas', num_factura=c[0]) }}"><i id="icono_ver_mas" class="lni lni-information"></i></a> -->
+                                            <a href="#" onclick="abrirModal_2('{{c[0]}}')">
+                                                <i id="icono_ver_mas" class="lni lni-comments-alt-2"></i>
+                                            </a>
+                                        </td>
+                                        <td class="btns_centro">
+                                            <a href="{{url_for('factura', num_factura=c[0])}}" >
+                                                <i id="icono_ver_mas" class="lni lni-printer"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <p id="noResults" style="display: none;">No se encontraron resultados</p>
+                            </table>
+                        </div>
+                    </section>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/static/javaScript/buscadorVentas.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principal</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/home.css">
+    <style>
+        /* Agrega un estilo para ocultar las filas que no coincidan con la búsqueda */
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.js"></script>
+
+</head>
+<body>
+    <main id="inicio">
+
+        
+        <section id="section_sombra" onclick="cerrar_nav()">
+
+            <section id="conten_desplegable" onclick="detener_Propagacion(event)">
+
+                <div id="conten_logo_user">
+                    <figure id="conten_icono_u">
+                        <img id="icono_user" src="../../static/image/circulo-de-usuario (3).png" alt="icono usuario">
+                    </figure>
+                    <div id="conten_nombre_2">
+                        <p>{{session['nom_empleado']}}</p>
+                    </div>
+                </div>
+
+                <div id="conten_info_cuerpo">
+
+                    <section id="lado_1">
+                        <p>{{rol}}</p>
+                    </section>
+                    <section id="lado_2">
+
+                       <a onclick="return confirm('¿Seguro que deseas cerrar la session?')" href="/"><i id="icono_cerrar_session" class="lni lni-exit"></i></a>  <a onclick="return confirm('¿Seguro que deseas cerrar la session?')" id="enlace_exit" href="/">Cerrar sesión</a>
+
+                       <div id="conten_btn_cerrar" onclick="cerrar_nav()">
+                        <i class="lni lni-close"></i>
+                       </div>
+                    </section>
+
+                </div>
+
+                
+                
+            </section>
+
+        </section>
+            
+
+        <section id="opciones">
+            <div id="logo">
+                <figure id="logo">
+                    <img src="/static/image/parabrisas_logo.png" alt="">
+                </figure>
+            </div>
+
+            <div id="nombre">
+                <div id="conten_nombre">
+                    <span id="usuario">Hola</span>
+                    <p>{{session['nom_empleado']}}</p>
+                </div>
+
+                <div id="conten_menu">
+                    <i id="menu" class="lni lni-user" onclick="abrir_nav()"></i>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="modulos">
+            <a href="{{url_for('clientes')}}" class="campo_a" id="modulo_clientes" style="display: none; opacity: 0;">
+                <div id="clientes" class="modulos">
+                    <figure><img src="/static/image/modulos/clientes.png" alt=""></figure>
+                    <p class="titulo">Clientes</p>
+                </div>
+            </a>
+            
+            <a href="{{url_for('muestra_ventas')}}" class="campo_a" id="modulo_ventas" style="display: none; opacity: 0;">
+                <div id="ventas" class="modulos">
+                    <figure><img src="/static/image/modulos/ventas.png" alt=""></figure>
+                    <p class="titulo">Ventas</p>
+                </div>
+            </a>
+            <a href="{{url_for('Cotizacion')}}" class="campo_a" id="modulo_cotizaciones" style="display: none; opacity: 0;">
+                <div id="cotizaciones" class="modulos">
+                    <figure><img src="/static/image/modulos/cotizaciones.png" alt=""></figure>
+                    <p class="titulo">Cotizaciones</p>
+                </div>
+            </a>
+            <a href="{{url_for('proveedores')}}" class="campo_a" id="modulo_compra_prove" style="display: none; opacity: 0;">
+                <div id="compras_proveedores" class="modulos">
+                    <figure><img src="/static/image/modulos/compras_proveedores.png" alt=""></figure>
+                    <p class="titulo">Proveedores</p>
+                </div>
+            </a>
+            <!-- <a href="{{url_for('muestraDevoluciones')}}" class="campo_a">
+                <div id="devoluciones" class="modulos">
+                    <figure><img src="/static/image/modulos/devoluciones.png" alt=""></figure>
+                    <p class="titulo">Devoluciones</p>
+                </div> 
+            </a> -->
+            
+            <a href="{{url_for('muestra_Productos')}}" class="campo_a" id="modulo_productos" style="display: none; opacity: 0;" >
+                <div id="producto" class="modulos">
+                    <figure><img src="/static/image/modulos/producto.png" alt=""></figure>
+                    <p class="titulo">Productos</p>
+                </div>
+            </a>
+            
+            <a href="{{url_for('empleados')}}" class="campo_a" id="modulo_empleados" style="display: none; opacity: 0;">
+                <div id="empleados" class="modulos">
+                    <figure><img src="/static/image/modulos/empleados.png" alt=""></figure>
+                    <p class="titulo">Empleados</p>
+                </div>
+            </a>
+           
+        </section>
+    </main>
+
+    <input type="hidden" readonly id="input_oculta_rol" value="{{rol}}" >
+    <input type="hidden" value="{{rol}}" id="input_valida_ventas" >
+    <script src="/static/javaScript/buscadorInicio.js"></script>
+    
+
+</body>
+</html>

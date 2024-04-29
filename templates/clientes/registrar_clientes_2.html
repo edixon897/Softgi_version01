@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de clientes</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/clientes/registrar_clientes_2.css">
+    
+</head>
+<body>
+
+
+    <main id="inicio">
+
+        <section id="conten_titulo_1">
+
+
+            <div id="conten_titulo_lado_1">
+                <h2></h2>
+            </div>
+            <div id="conten_titulo_lado_2">
+                <div id="barra_progreso_1">
+
+                </div>
+                <div id="barra_progreso_3">
+                    
+                </div>
+            </div>
+
+        </section>
+
+        <form action="/crear_cliente_2" method="post" id="conten_formulario_2">
+
+            <div id="conten_FORM">
+
+            
+
+                <section class="lado_info_personal">
+
+                    <div class="conten_titulo_div">
+                        <p>Datos del cliente</p>
+                    </div>
+
+
+                    <div class="conten_inputs_1">
+                        
+                        <input type="hidden" value="{{mensaje}}" id="input_error" oninput="verifica_input()" readonly>
+
+
+
+                        <div class="campo_2">
+                            <input type="number" name="doc_cliente" id="documento" class="input_campo" placeholder="Documento" required>
+                            
+                        </div>
+                        
+                        <div class="campo_2">
+                            <input type="text" name="nom_cliente" id="nombre"  class="input_campo" placeholder="Nombres" required>
+                        </div>
+                       
+
+                        <div class="campo_2">
+                            <input type="text" name="ape_cliente" id="apellido" class="input_campo" placeholder="Apellidos" required>
+                        
+                        </div>
+                        
+
+                    </div>
+                    
+                </section>
+
+                <section class="lado_info_contacto">
+
+                    <div class="conten_titulo_div_2">
+                        <p></p>
+                    </div>
+
+                    <div class="content_inputs_2">
+
+                        <div class="campo_2">
+                            <input type="date" name="fecha_nacimiento_cliente" id="fecha" class="input_campo" required>
+                            <label for="fecha">Fecha de nacimiento</label>
+                        </div>
+                        
+
+                        <div class="campo_2">
+                            <select id="opt" name="tipopersona" class="input_campo" oninput="campo_lleno5()" required>
+                                <option value="">seleciona tipo de persona</option>
+                                <option value="natural">Natural</option>
+                                <option value="juridica">Juridica(representante legal)</option>
+                            </select>
+                            <label for=""></label>
+                        </div>
+                        
+
+
+                    </div>
+
+
+                </section>
+
+
+                <div id="conten_FORM_2">
+
+                    
+                    <section class="lado_info_personal">
+
+                        <div class="conten_titulo_div">
+                            <p></p>
+                        </div>
+    
+    
+                        <div class="conten_inputs_1">
+
+                            <p>Por favor, recuerda completar toda la información del cliente despues de finalizar la acción que deseas realizar.</p>
+                            
+                        </div>
+                        
+                    </section>
+    
+                    <section class="lado_info_contacto">
+    
+                        <div class="conten_titulo_div_2">
+                            <p></p>
+                        </div>
+    
+                        <div class="content_inputs_2">
+    
+                            <p class="icono_listo"><i class="lni lni-user"></i></p>
+    
+                        </div>
+    
+    
+                    </section>
+
+                </div>
+
+
+            </div>
+
+            <div id="conten_buttons">
+                <div class="conten_buttons_2">
+                    <a href="#" onclick="cerrarModal_3()" class="enlace_regresar"><i class="lni lni-cross-circle"></i></a>
+                </div>
+                <div class="conten_buttons_2">
+                    <a onclick="desplaza_form()" class="boton_registrar"><i class="lni lni-arrow-right"></i></a>
+                </div>
+
+
+                <div id="sesion_buttons_2">
+                    <div class="conten_buttons_2">
+                        <a onclick="desplaza_form_regreso()" class="enlace_regresar"><i class="lni lni-arrow-left"></i></a>
+                    </div>
+                    <div class="conten_buttons_2">
+                        <button type="submit" class="boton_registrar" onclick="animacion_envio()">registrar</button>
+                    </div>
+                </div>
+                
+                
+            </div>
+
+
+        </form>
+
+
+    </main>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../static/javaScript/color_campo_lleno.js"></script>
+    
+
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empleados</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/empleados/muestra_empleados.css">
+    <link rel="stylesheet" href="../../static/css/registro/regristro.css">
+    <link rel="stylesheet" href="../../static/css/registro/recuperar_contrasena.css">
+</head>
+<body>
+    <main id="cuerpo">
+        <section id="section_1">
+            <p>Empleados</p>
+        </section>
+
+        <section id="section_2">
+            <div id="conten_botones">
+                <div id="conten_regresar">
+                        <a href="{{url_for ('inicio') }}" id="isla_1">
+                            <i id="boton_back" class="lni lni-home"></i>
+                        </a>
+                </div>
+                <div id="conten_btn_navegacion">
+                    <div id="isla_2">
+                        <button class="botones"  id="abrirModalBtn">Agregar Empleado</button>
+                    </div>
+                </div>
+                <div id="conten_btn_navegacion">
+                    <div id="isla_2">
+                        <button id="abrirRecuperar" class="botones" >Cambiar Contraseña</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="conten_tabla">
+                <div id="isla_3">
+                    <section id="section_buscador_titulo">
+                        <div id="conten_titulo">
+                            <p>Mis empleados</p>
+                        </div>
+
+                        <form id="form_conten">
+                            <i id="icono_busqueda" class="lni lni-search-alt"></i>
+                            <input type="search" id="searchClientes" name="buscadorEmpleados" placeholder="Buscar empleado">
+                        </form>
+                    </section>
+
+                    <section id="section_tabla_info">
+                        <div id="conten_t">
+                            <table id="TablaEmpleados">
+                                <thead>
+                                    <tr>
+                                        <th>C.C. empleado</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Fecha de nacimiento</th>
+                                        <th>Contacto</th>
+                                        <th>Email</th>
+                                        <th>Dirección</th>
+                                        <th>Ciudad</th>
+                                        <th>Rol</th>
+                                        <th>Fecha de registro</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            
+                                <tbody>
+                                    {% for c in resulta %}
+                                    <tr>
+                                        {% for i in range(0, 12) %}
+                                            
+                                            <td>{{ c[i] }}</td>
+                                            
+                                        {% endfor %}
+                                        <td class="btns_centro">
+                                            <button onclick="abrirModalEditarEmpleado('{{c[0]}}')" class="btn_editar">
+                                                <i id="icono_2" class="lni lni-pencil"></i>
+                                            </button>
+                                        </td>
+                                        <td >
+                                            <button onclick="eliminarEmpleado('{{c[0]}}')" class="btn_eliminar">
+                                                <i id="icono_3" class="lni lni-trash-can"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <p id="noResults" style="display: none;">No se encontraron resultados</p>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul>
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+        {% endwith %}
+
+    
+    <!------------------------------------- Modal Crear empleado ------------------------------------------------------------>
+
+        <div id="crearEmpleadoModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <form action="/registro" method="post" id="registro_empleado">
+                    <div id="pag_1" class="campo_registro_empl">
+                        <div id="nombre_empl" class="campo_empleado">
+                            <i class="lni lni-user"></i>
+                            <input type="text" name="nombre" maxlength="25" minlength="2"
+                            pattern="[a-zA-Z ]{2,25}" autocomplete="given-name" placeholder="Nombre (s)" tabindex="1" required>
+                        </div>
+                        <div id="contacto_empl" class="campo_empleado">
+                            <i class="lni lni-mobile"></i>
+                            <input type="tel" name="contacto" inputmode="tel" pattern="[0-9]{10}" maxlength="10" minlength="10" placeholder="Celular" tabindex="3" required>
+                        </div>
+                        <div id="campo_nac" class="campo_nac">
+                            <label for="fechaNacimiento" class="letras">Fecha de nacimiento</label>
+                            <input type="date" name="nacimiento" id="fechaNacimiento" tabindex="5" required>
+                        </div>
+                        <div id="ciudad_empl" class="campo_empleado">
+                            <i class="lni lni-home"></i>
+                            <input type="text" name="ciudad" maxlength="14" minlength="2" pattern="[a-zA-Z\s]{2,14}"
+                            placeholder="Ciudad" tabindex="7" required>
+                        </div>
+                        <div id="rol_empl">
+                            <label for="" class="letras">Rol</label>
+                            <select name="rol" id="rol" tabindex="9" required>
+                                <option value="administrador">Administrador</option>
+                                <option value="almacenista">Almacenista</option>
+                                <option value="vendedor">Vendedor</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="pag_2" class="campo_registro_empl">
+                        <div id="apellido_empl" class="campo_empleado">
+                            <i></i>
+                            <input type="text" name="apellido" maxlength="25" minlength="2"
+                            pattern="[a-zA-Z ]{2,25}" autocomplete="family-name" placeholder="Apellido (s)" tabindex="2" required>
+                        </div>
+                        <div id="correo_empl" class="campo_empleado">
+                            <i class="lni lni-envelope"></i>
+                            <input type="email" name="correo" inputmode="email" maxlength="56" placeholder="Correo" tabindex="4" required>
+                        </div>
+                        <div id="documento_empl" class="campo_empleado">
+                            <i class="lni lni-postcard"></i>
+                            <input type="number" name="documento" pattern="[0-9]{6,10}" title="El documento debe tener entre 6 y 10 dígitos numéricos" maxlength="10" minlength="6" autocomplete="off" placeholder="Cédula/Documento" tabindex="6" required>
+                        </div>
+                        <div id="direccion_empl" class="campo_empleado">
+                            <i class="lni lni-map-marker"></i>
+                            <input type="text" name="direccion" maxlength="56" minlength="2" placeholder="Dirección" tabindex="8" required>
+                        </div>
+                        <div id="contrasena_empl" class="campo_empleado">
+                            <i class="lni lni-key"></i>
+                            <input type="password" id="input_psw" name="contrasena" placeholder="Contraseña" tabindex="10" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn_empl" id="btnEnviar">REGISTRAR</button>
+                   
+                </form>
+            </div>
+        </div>
+        <!-------- Modal para Recuperar Contraseña --------------->
+
+        <div id="recuperarContradoModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <form action="/solicitarCambio_contraseña" method="POST" id="recuperar_psw">
+                    <div class="contenedor_recuperar_psw">
+                        <h3>Vamos a restablecer tu contraseña</h3>
+                        <div id="recuperar_contrasena">
+                            <label for="email">
+                                <span>Digita tu correo electrónico:</span>
+                            </label>
+                            <i class="lni lni-envelope"></i>
+                            <input type="email" name="email" id="email" placeholder="Correo" required>
+                        </div>
+                        <button type="submit" id="btn">Recuperar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <div id="modalContainer"></div> <!-- no borrar -->
+    
+
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="/static/javaScript/modalEmpleado.js"></script>
+        <script src="/static/javaScript/buscadorEmpleados.js"></script>
+
+        <script>
+            function abrirModalEditarEmpleado(documento) {
+                $.ajax({
+                    url: `/editar_empleado/${documento}`,
+                    type: 'GET',
+                    success: function(data) {
+                        $('#modalContainer').html(data); // Insertar el contenido del modal en el contenedor
+                        $('#editarEmpleadoModal').show(); // Mostrar el modal
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+                
+                $(window).click(function (e) {
+                    if (e.target.id === "editarEmpleadoModal") {
+                        $("#editarEmpleadoModal").hide();
+                    }
+                });
+            }
+        </script>
+
+        <!-- Script para controlar fecha de nacimiento -->
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Obtener el elemento del campo de fecha
+                var fechaNacimientoInput = document.getElementById('fechaNacimiento');
+    
+                // Escuchar el evento de cambio en el campo de fecha
+                fechaNacimientoInput.addEventListener('change', function() {
+                    // Convertir el valor del campo de fecha a un objeto Date
+                    var fechaNacimiento = new Date(this.value);
+    
+                    // Obtener fecha actual
+                    var fechaActual = new Date();
+    
+                    // Calcular la diferencia en milisegundos entre las fechas
+                    var diferenciaMilisegundos = fechaActual - fechaNacimiento;
+    
+                    // Calcular la edad del usuario en años
+                    var edadAnios = Math.floor(diferenciaMilisegundos / (1000 * 60 * 60 * 24 * 365.25));
+    
+                    // Verificar si la edad es menor de 18 años
+                    if (edadAnios < 18) {
+                        alert('Debe ser mayor de 18 años para registrarse.');
+                        this.value = ''; // Limpiar el valor del campo de fecha
+                    }
+                });
+            });
+        </script>
+        
+        
+        
+</body>
+</html>
