@@ -127,32 +127,37 @@
                 <!-- Campos para el primer producto -->
                 <div id="producto_1" class="producto">
                     <div id="num_fac">
+                        <label for="">Numero de factura</label>
                         <input type="text" name="num_factura_proveedor" placeholder="Número de factura" class="campo" required>
                     </div>
-                    <div id="fecha_compra">
-                        <label for="fecha_compra">Fecha</label>
-                        <input type="date" name="fecha_compra" id="fecha_compra_input" class="campo" required>
-                        <span id="error_fecha" style="color: red; display: none;">La fecha no puede ser mayor al día de hoy.</span>
-                    </div>
+                    
                     <div id="proveedor">
                         <label for="proveedor_compra">Proveedor</label>
-                        <select name="proveedor_compra" class="input_campo" required>
+                        <select name="proveedor_compra" class="campo" required>
                             <option value="">Proveedor</option>
                             {% for c in prove %}
                                 <option value="{{c[0]}}">{{c[1]}}</option>
                             {% endfor %}
                         </select>
                     </div>
+                    <div id="fecha_compra">
+                        <label for="fecha_compra">Fecha</label>
+                        <input type="date" name="fecha_compra" id="fecha_compra_input" class="campo" required>
+                        <span id="error_fecha" style="color: red; display: none;">La fecha no puede ser mayor al día de hoy.</span>
+                    </div>
                     <div>
+                        <label for="">Producto</label>
                         <input type="text" name="producto_compra[]" placeholder="Producto" class="campo" required>
                     </div>
                     <div>
+                        <label for="">Cantidad</label>
                         <input type="number" name="cantidad_compra[]" placeholder="Cantidad" class="campo" min="0" required>
                     </div>
-                    
                     <div>
+                        <label for="">Valor/cantidad</label>
                         <input type="number" name="valor_unidad[]" placeholder="Valor por unidad" class="campo" required>
                     </div>
+                    
                 </div>
                 
                 <!-- Botón para agregar más productos -->
@@ -172,30 +177,53 @@
     <script src="../../static/javaScript/buscarCompras_prove.js"></script>
     <script src="../../static/javaScript/modal_actualizar_proveedor.js"></script>
     <script src="../../static/javaScript/control_fecha_registro_compraprovee.js"></script>
-<script>
-    var productoCount = 1; // Contador de productos
+
+
+    <script>
+    var contadorProductos = 1;
 
     function agregarProducto() {
-        productoCount++; // Incrementa el contador de productos
-        var nuevoProducto = document.createElement("div");
-        nuevoProducto.id = "producto_" + productoCount;
-        nuevoProducto.classList.add("producto");
+        contadorProductos++;
+        var form = document.getElementById('compraform');
+
+        // Crear el contenedor del nuevo producto
+        var nuevoProducto = document.createElement('div');
+        nuevoProducto.id = 'producto_' + contadorProductos;
+        nuevoProducto.classList.add('producto');
         nuevoProducto.innerHTML = `
             <div>
-                <input type="text" name="producto_compra[]" placeholder="Producto" class="campo">
+                <input type="text" name="producto_compra[]" placeholder="Producto" class="campo" required>
             </div>
             <div>
-                <input type="number" name="cantidad_compra[]" placeholder="Cantidad" class="campo">
+                <input type="number" name="cantidad_compra[]" placeholder="Cantidad" class="campo" min="0" required>
             </div>
             <div>
-                <input type="number" name="valor_unidad[]" placeholder="Valor por unidad" class="campo">
-            </div>`;
+                <input type="number" name="valor_unidad[]" placeholder="Valor por unidad" class="campo" required>
+            </div>
+            <button type="button" class="btn_eliminarC" data-id="${contadorProductos}">Eliminar</button>`;
 
-        // Insertar el nuevo producto antes del botón "Agregar producto"
-        var botonAgregar = document.querySelector("button[type='button']");
-        botonAgregar.parentNode.insertBefore(nuevoProducto, botonAgregar);
+        // Encontrar el contenedor del primer producto
+        var primerProducto = document.getElementById('producto_1');
+
+        // Insertar el nuevo producto al lado del primer producto
+        form.insertBefore(nuevoProducto, primerProducto.nextElementSibling);
+
+        // Agregar evento de escucha de clic al botón "Eliminar"
+        var botonesEliminar = document.querySelectorAll('.btn_eliminarC');
+        botonesEliminar.forEach(function(boton) {
+            boton.addEventListener('click', function() {
+                eliminarProducto(boton.getAttribute('data-id'));
+            });
+        });
+    }
+
+    function eliminarProducto(id) {
+        var elementoAEliminar = document.getElementById('producto_' + id);
+        elementoAEliminar.parentNode.removeChild(elementoAEliminar);
     }
 </script>
+
+    
 
 
     <script>

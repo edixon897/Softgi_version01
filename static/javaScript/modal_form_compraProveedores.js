@@ -13,12 +13,12 @@ $(document).ready(function () {
     });
 });
 
-var contadorProductos = 0;
+/* var contadorProductos = 0;
 
 function agregarProducto() {
     contadorProductos++;
     // Crear campos dinámicamente y agregarlos al formulario
-    var form = document.getElementById('compraForm');
+    var form = document.getElementById('compraform');
 
     var div = document.createElement('div');
     div.innerHTML = '<label for="producto_compra_modal_'+ contadorProductos +'">Producto</label>' +
@@ -26,15 +26,19 @@ function agregarProducto() {
                     '<label for="cantidad_modal_'+ contadorProductos +'">Cantidad</label>' +
                     '<input type="number" name="cantidad_compra[]" id="cantidad_modal_'+ contadorProductos +'" placeholder="Cantidad" class="campo">' +
                     '<label for="valor_unidad_modal_'+ contadorProductos +'">Valor por unidad</label>' +
-                    '<input type="number" name="valor_unidad[]" id="valor_unidad_modal_'+ contadorProductos +'" placeholder="Valor por unidad" class="campo">';
+                    '<input type="number" name="valor_unidad[]" id="valor_unidad_modal_'+ contadorProductos +'" placeholder="Valor por unidad" class="campo">' +
+                    '<button type="button" onclick="eliminarProducto('+ contadorProductos +')">Eliminar</button>';
 
     form.appendChild(div);
 
     var modal = document.getElementById('modal-content');
     modal.scrollTop = modal.scrollHeight;
-    console.log(producto_compra);
-    console.log(cantidad_compra);
-    console.log(valor_unidad);
+}
 
+
+function eliminarProducto(id) {
+    console.log('Eliminando producto con ID:', id); // Agregar este console.log()
+    var elementoAEliminar = document.getElementById('producto_compra_modal_' + id).parentNode;
+    elementoAEliminar.parentNode.removeChild(elementoAEliminar);
 };
-
+ */

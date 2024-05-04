@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, g, session
-from flask_socketio import SocketIO
 from flaskext.mysql import MySQL
 from flask_mail import Mail, Message
 from email.mime.text import MIMEText
@@ -15,7 +14,7 @@ def conexion():
         app.config['MYSQL_DATABASE_SECRET_KEY'] = app.secret_key
         app.config['MYSQL_DATABASE_USER'] = 'root'
         app.config['MYSQL_DATABASE_PASSWORD'] = ''
-        app.config['MYSQL_DATABASE_DB'] = 'softgi'
+        app.config['MYSQL_DATABASE_DB'] = 'sofgi'
         app.config['MYSQL_DATABASE_HOST'] = 'localhost'
         app.config['MYSQL_DATABASE_PORT'] = 3306
         app.config['MYSQL_DATABASE_CHARSET'] = 'utf8mb4'
